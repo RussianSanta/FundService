@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundraising App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Fundraising App</h1>
+        <div class="button-group">
+            <button onclick="showForm('paymentForm')">Оплата</button>
+            <button onclick="showForm('createFundForm')">Создать сбор</button>
+            <button onclick="showForm('myFundsForm')">Мои сборы</button>
+        </div>
+
+        <div id="paymentForm" class="form-container hidden">
+            <h2>Оплата</h2>
+            <select id="fundSelect" onchange="showFundInfoButton()">
+                <option value="" disabled selected>Выберите сбор</option>
+            </select>
+            <div id="fundInfoContainer" class="hidden">
+                <button id="fundInfoButton" onclick="toggleFundInfo()">Информация о сборе</button>
+                <div id="fundInfo" class="hidden">
+                    <p><strong>Название сбора:</strong> <span id="fundName"></span></p>
+                    <p><strong>Описание сбора:</strong> <span id="fundDescription"></span></p>
+                    <p><strong>Минимальная сумма перевода:</strong> <span id="fundMinAmount"></span></p>
+                </div>
+            </div>
+            <input type="text" placeholder="Введите сумму">
+            <button onclick="handlePayment()">Подтвердить</button>
+        </div>
+
+        <div id="createFundForm" class="form-container hidden">
+            <h2>Создать сбор</h2>
+            <input type="text" placeholder="Название сбора">
+            <textarea placeholder="Описание сбора" rows="4" cols="50"></textarea>
+            <input type="number" placeholder="Минимальная сумма перевода">
+            <button onclick="createFund()">Создать</button>
+        </div>
+
+        <div id="myFundsForm" class="form-container hidden">
+            <h2>Мои сборы</h2>
+            <div id="fundsList"></div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
