@@ -184,20 +184,11 @@ function handlePayment() {
     const fundSelect = document.getElementById('fundSelect');
     const amountInput = document.querySelector('#paymentForm input[type="text"]');
     const selectedFundIndex = fundSelect.selectedIndex - 1;
+    const balance = -1;
     
     if (window.ethereum==undefined) {
         alert('Please install MetaMask!');
         return;
-    } else {
-        //--Получаем информацию о сети 
-        ethereum
-            .request({method: 'net_version'})
-        	        .then((result) => {
-        				alert("Сеть: " + result);
-        	        })
-        	        .catch((error) => {
-        	            alert(error);
-        	       });
     }
 	ethereum
 	    .request({method: 'eth_accounts'})
@@ -212,7 +203,8 @@ function handlePayment() {
                         params: myaddress	
                         })
                         .then((result) => {
-                            console.log("Баланс: " + parseInt(result, 16)/1e18);			
+                            balance = parseInt(result, 16)/1e18
+                            console.log("Баланс: " + balance);			
                         })
                         .catch((error) => {
                             console.log(error);					
@@ -236,6 +228,11 @@ function handlePayment() {
     const selectedFund = funds[selectedFundIndex];
     if (amount < selectedFund.minAmount) {
         alert('Сумма перевода должна быть больше или равна минимальной сумме перевода.');
+        return;
+    }
+
+    if (amount < balance) {
+        alert('Не хватает денежных средств на счету для перевода');
         return;
     }
 
