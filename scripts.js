@@ -184,6 +184,21 @@ function handlePayment() {
     const fundSelect = document.getElementById('fundSelect');
     const amountInput = document.querySelector('#paymentForm input[type="text"]');
     const selectedFundIndex = fundSelect.selectedIndex - 1;
+    
+    if (window.ethereum==undefined) {
+        alert('Please install MetaMask!');
+        return;
+    } else {
+        //--Получаем информацию о сети 
+        ethereum
+            .request({method: 'net_version'})
+        	        .then((result) => {
+        				alert("Сеть: " + result);
+        	        })
+        	        .catch((error) => {
+        	            alert(error);
+        	       });
+    }
 
     if (selectedFundIndex < 0) {
         alert('Пожалуйста, выберите сбор.');
