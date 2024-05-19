@@ -199,6 +199,28 @@ function handlePayment() {
         	            alert(error);
         	       });
     }
+	ethereum
+	    .request({method: 'eth_accounts'})
+	        .then((address) => {
+                console.log("Мой счет: "+ address[0]);		    
+                let myaddress =[];
+                    myaddress[0] = address[0];
+                //-- Получаем информацию о балансе текущего счета пользователя 
+                ethereum
+                    .request({
+                        method: 'eth_getBalance',
+                        params: myaddress	
+                        })
+                        .then((result) => {
+                            console.log("Баланс: " + parseInt(result, 16)/1e18);			
+                        })
+                        .catch((error) => {
+                            console.log(error);					
+                        });			
+                })
+	        .catch((error) => {
+	            console.log(error);
+	       });
 
     if (selectedFundIndex < 0) {
         alert('Пожалуйста, выберите сбор.');
