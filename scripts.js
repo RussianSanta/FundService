@@ -231,7 +231,7 @@ function handlePayment() {
         return;
     }
 
-    if (amount < balance) {
+    if (amount > balance) {
         alert('Не хватает денежных средств на счету для перевода');
         return;
     }
