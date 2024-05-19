@@ -184,7 +184,7 @@ function handlePayment() {
     const fundSelect = document.getElementById('fundSelect');
     const amountInput = document.querySelector('#paymentForm input[type="text"]');
     const selectedFundIndex = fundSelect.selectedIndex - 1;
-    const balance = -1;
+    let balance = -1;
     
     if (window.ethereum==undefined) {
         alert('Please install MetaMask!');
