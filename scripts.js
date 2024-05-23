@@ -1,3 +1,318 @@
+// Константы и ABI вашего контракта
+const contractAddress = "0x55eE0B72D5952A15220e6f425cB86AB347b942CF";
+const contractABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fundId",
+				"type": "uint256"
+			}
+		],
+		"name": "closeFund",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_minAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "createFund",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "destroyContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fundId",
+				"type": "uint256"
+			}
+		],
+		"name": "donate",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fundId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "donor",
+				"type": "address"
+			}
+		],
+		"name": "DonationReceived",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fundId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "creator",
+				"type": "address"
+			}
+		],
+		"name": "FundClosed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fundId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "minAmount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "creator",
+				"type": "address"
+			}
+		],
+		"name": "FundCreated",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fundId",
+				"type": "uint256"
+			}
+		],
+		"name": "requestWithdrawal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fundId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "recipient",
+				"type": "address"
+			}
+		],
+		"name": "WithdrawalRequested",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "contributions",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "funds",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "minAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "creator",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "isActive",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fundId",
+				"type": "uint256"
+			}
+		],
+		"name": "getFundDetails",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getUserFunds",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
+// Инициализация Web3
+let web3;
+let contract;
+if (window.ethereum) {
+    web3 = new Web3(window.ethereum);
+    contract = new web3.eth.Contract(contractABI, contractAddress);
+} else {
+    alert('Пожалуйста, установите MetaMask!');
+}
+
+// Класс для управления фондами
 class Fund {
     constructor(name, description, minAmount) {
         this.name = name;
@@ -28,7 +343,7 @@ function changeButtonColor(button) {
     button.style.backgroundColor = randomColor;
 }
 
-function createFund() {
+async function createFund() {
     const nameInput = document.querySelector('#createFundForm input[type="text"]');
     const descriptionTextarea = document.querySelector('#createFundForm textarea');
     const minAmountInput = document.querySelector('#createFundForm input[type="number"]');
@@ -42,21 +357,29 @@ function createFund() {
         return;
     }
     
-    const newFund = new Fund(name, description, minAmount);
-    funds.push(newFund);
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
 
-    updateFundSelect();
-    updateMyFundsForm(); // Обновляем третью форму
+    try {
+        await contract.methods.createFund(name, description, minAmount).send({ from: account });
+        const newFund = new Fund(name, description, minAmount);
+        funds.push(newFund);
 
-    // Очищаем поля ввода
-    nameInput.value = '';
-    descriptionTextarea.value = '';
-    minAmountInput.value = '';
+        updateFundSelect();
+        updateMyFundsForm(); // Обновляем третью форму
 
-    // Выводим сообщение об успешном создании сбора
-    alert('Сбор успешно создан!');
+        // Очищаем поля ввода
+        nameInput.value = '';
+        descriptionTextarea.value = '';
+        minAmountInput.value = '';
+
+        // Выводим сообщение об успешном создании сбора
+        alert('Сбор успешно создан!');
+    } catch (error) {
+        console.error(error);
+        alert('Ошибка при создании сбора.');
+    }
 }
-
 
 function updateFundSelect() {
     const fundSelect = document.getElementById('fundSelect');
@@ -74,7 +397,6 @@ function showFundInfoButton() {
     document.getElementById('fundInfoContainer').classList.remove('hidden');
     updateFundInfo();
 }
-
 
 function toggleFundInfo() {
     const fundInfoButton = document.getElementById('fundInfoButton');
@@ -134,85 +456,53 @@ function updateMyFundsForm() {
     });
 }
 
+async function requestPayment(index) {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
 
-
-function requestPayment(index) {
-    funds[index].totalAmount = 0;
-    alert('Запрошен вывод денег');
-    updateMyFundsForm();
-}
-
-function closeFund(index) {
-    requestPayment(index); // Запрашиваем вывод денег
-    funds.splice(index, 1); // Удаляем сбор из массива
-    updateFundSelect(); // Обновляем выпадающий список в первой форме
-    updateMyFundsForm(); // Обновляем третью форму
-}
-
-
-// Обновим третью форму при каждом добавлении нового сбора
-function createFund() {
-    const nameInput = document.querySelector('#createFundForm input[type="text"]');
-    const descriptionTextarea = document.querySelector('#createFundForm textarea');
-    const minAmountInput = document.querySelector('#createFundForm input[type="number"]');
-    
-    const name = nameInput.value;
-    const description = descriptionTextarea.value;
-    const minAmount = minAmountInput.value;
-    
-    if (!name || !description || !minAmount) {
-        alert('Пожалуйста, заполните все поля.');
-        return;
+    try {
+        await contract.methods.requestPayment(index).send({ from: account });
+        funds[index].totalAmount = 0;
+        alert('Запрошен вывод денег');
+        updateMyFundsForm();
+    } catch (error) {
+        console.error(error);
+        alert('Ошибка при запросе выплаты.');
     }
-    
-    const newFund = new Fund(name, description, minAmount);
-    funds.push(newFund);
-
-    updateFundSelect();
-    updateMyFundsForm(); // Обновляем третью форму
-
-    // Очищаем поля ввода
-    nameInput.value = '';
-    descriptionTextarea.value = '';
-    minAmountInput.value = '';
-
-    // Выводим сообщение об успешном создании сбора
-    alert('Сбор успешно создан!');
 }
 
-function handlePayment() {
+async function closeFund(index) {
+    await requestPayment(index); // Запрашиваем вывод денег
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+
+    try {
+        await contract.methods.closeFund(index).send({ from: account });
+        funds.splice(index, 1); // Удаляем сбор из массива
+        updateFundSelect(); // Обновляем выпадающий список в первой форме
+        updateMyFundsForm(); // Обновляем третью форму
+    } catch (error) {
+        console.error(error);
+        alert('Ошибка при закрытии сбора.');
+    }
+}
+
+async function handlePayment() {
     const fundSelect = document.getElementById('fundSelect');
     const amountInput = document.querySelector('#paymentForm input[type="text"]');
     const selectedFundIndex = fundSelect.selectedIndex - 1;
     let balance = -1;
     
-    if (window.ethereum==undefined) {
+    if (!window.ethereum) {
         alert('Please install MetaMask!');
         return;
     }
-	ethereum
-	    .request({method: 'eth_accounts'})
-	        .then((address) => {
-                console.log("Мой счет: "+ address[0]);		    
-                let myaddress =[];
-                    myaddress[0] = address[0];
-                //-- Получаем информацию о балансе текущего счета пользователя 
-                ethereum
-                    .request({
-                        method: 'eth_getBalance',
-                        params: myaddress	
-                        })
-                        .then((result) => {
-                            balance = parseInt(result, 16)/1e18
-                            console.log("Баланс: " + balance);			
-                        })
-                        .catch((error) => {
-                            console.log(error);					
-                        });			
-                })
-	        .catch((error) => {
-	            console.log(error);
-	       });
+
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+
+    const userBalance = await web3.eth.getBalance(account);
+    balance = web3.utils.fromWei(userBalance, 'ether');
 
     if (selectedFundIndex < 0) {
         alert('Пожалуйста, выберите сбор.');
@@ -232,12 +522,19 @@ function handlePayment() {
     }
 
     if (amount > balance) {
-        alert('Не хватает денежных средств на счету для перевода');
+        alert('Недостаточно средств на счету.');
         return;
     }
 
-    selectedFund.totalAmount += amount;
-    amountInput.value = '';
-    alert('Перевод успешно выполнен!');
+    try {
+        const weiAmount = web3.utils.toWei(amount.toString(), 'ether');
+        await contract.methods.donateToFund(selectedFundIndex).send({ from: account, value: weiAmount });
+        selectedFund.totalAmount += amount;
+        alert('Пожертвование успешно выполнено!');
+        updateMyFundsForm();
+    } catch (error) {
+        console.error(error);
+        alert('Ошибка при выполнении пожертвования.');
+    }
 }
 
