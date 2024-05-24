@@ -456,12 +456,9 @@ function updateFundInfo() {
 }
 
 async function updateMyFundsForm() {
-    try {
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0];
-        
+    try {      
         // Получение списка активных сборов пользователя
-        const userFundIds = await contract.getUserFunds({ from: account });
+        const userFundIds = await contract.getUserFunds();
 
         funds.length = 0; // Очищаем текущий массив фондов
 
