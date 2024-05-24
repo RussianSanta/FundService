@@ -327,14 +327,6 @@ class Fund {
 
 const funds = [];
 
-document.getElementById("ateFundFormButton").onclick = showForm('paymentForm')
-document.getElementById("myFundsFormButton").onclick = showForm('createFundForm')
-document.getElementById("paymentFormButton").onclick = showForm('myFundsForm')
-document.getElementById("fundInfoButton").onclick = toggleFundInfo()
-document.getElementById("handlePaymentButton").onclick = handlePayment()
-document.getElementById("createFundButton").onclick = createFund()
-document.getElementById("fundSelect").onchange = showFundInfoButton()
-
 function showForm(formId) {
     // Скрыть все формы
     document.querySelectorAll('.form-container').forEach(form => {
@@ -547,3 +539,11 @@ async function handlePayment() {
         alert('Ошибка при выполнении пожертвования.');
     }
 }
+
+document.getElementById("ateFundFormButton").onclick = showForm('paymentForm')
+document.getElementById("myFundsFormButton").onclick = showForm('createFundForm')
+document.getElementById("paymentFormButton").onclick = showForm('myFundsForm')
+document.getElementById("fundInfoButton").onclick = toggleFundInfo()
+document.getElementById("handlePaymentButton").onclick = handlePayment()
+document.getElementById("createFundButton").onclick = createFund()
+document.getElementById("fundSelect").onchange = showFundInfoButton()
