@@ -1,4 +1,16 @@
-// Константы и ABI вашего контракта
+
+// Подключаем ethers.js
+import { ethers } from "ethers";
+
+if (window.ethereum==undefined) {
+	alert('Пожалуйста, установите MetaMask!');
+	console.log('Пожалуйста, установите MetaMask!')
+}
+
+// Инициализация ethers.js
+const provider = new ethers.BrowserProvider(window.ethereum);
+const signer = await provider.getSigner();
+
 const contractAddress = "0x55eE0B72D5952A15220e6f425cB86AB347b942CF";
 const contractABI = [
 	{
@@ -302,21 +314,7 @@ const contractABI = [
 	}
 ];
 
-// Подключаем ethers.js
-const { ethers } = require("ethers");
-
-// Инициализация ethers.js
-let provider;
-let signer;
-let contract;
-
-if (window.ethereum) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    signer = provider.getSigner();
-    contract = new ethers.Contract(contractAddress, contractABI, signer);
-} else {
-    alert('Пожалуйста, установите MetaMask!');
-}
+var contract = new ethers.Contract(contractAddress, contractABI, signer);;
 
 // Класс для управления фондами
 class Fund {
