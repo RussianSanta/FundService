@@ -11,17 +11,17 @@
         <h1>Fundraising App</h1>
         <div class="button-group">
             <button id = "paymentFormButton">Оплата</button>
-            <button id = "createFundFormButton" onclick="showForm('createFundForm')">Создать сбор</button>
-            <button id = "myFundsFormButton" onclick="showForm('myFundsForm')">Мои сборы</button>
+            <button id = "createFundFormButton">Создать сбор</button>
+            <button id = "myFundsFormButton">Мои сборы</button>
         </div>
 
         <div id="paymentForm" class="form-container hidden">
             <h2>Оплата</h2>
-            <select id="fundSelect" onchange="showFundInfoButton()">
+            <select id="fundSelect">
                 <option value="" disabled selected>Выберите сбор</option>
             </select>
             <div id="fundInfoContainer" class="hidden">
-                <button id="fundInfoButton" onclick="toggleFundInfo()">Информация о сборе</button>
+                <button id="fundInfoButton">Информация о сборе</button>
                 <div id="fundInfo" class="hidden">
                     <p><strong>Название сбора:</strong> <span id="fundName"></span></p>
                     <p><strong>Описание сбора:</strong> <span id="fundDescription"></span></p>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <input type="text" placeholder="Введите сумму">
-            <button id = "handlePaymentButton" onclick="handlePayment()">Подтвердить</button>
+            <button id = "handlePaymentButton">Подтвердить</button>
         </div>
 
         <div id="createFundForm" class="form-container hidden">
@@ -37,7 +37,7 @@
             <input type="text" placeholder="Название сбора">
             <textarea placeholder="Описание сбора" rows="4" cols="50"></textarea>
             <input type="number" placeholder="Минимальная сумма перевода">
-            <button id = "createFundButton" onclick="createFund()">Создать</button>
+            <button id = "createFundButton">Создать</button>
         </div>
 
         <div id="myFundsForm" class="form-container hidden">
