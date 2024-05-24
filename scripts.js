@@ -347,7 +347,7 @@ function showForm(formId) {
     });
     // Показать выбранную форму
     document.getElementById(formId).classList.remove('hidden');
-	
+
 	// Обновить первую форму при открытии
 	if (formId === 'paymentForm') {
 		updateFundSelect()
@@ -554,7 +554,7 @@ async function handlePayment() {
     const account = accounts[0];
 
     const userBalance = await provider.getBalance(account);
-    balance = ethers.utils.formatEther(userBalance);
+	console.log(userBalance)
 
     if (selectedFundIndex < 0) {
         alert('Пожалуйста, выберите сбор.');
@@ -579,7 +579,7 @@ async function handlePayment() {
     }
 
     try {
-        const weiAmount = ethers.utils.parseEther(amount.toString());
+        const weiAmount = amount.toString() + "wei";
         const tx = await contract.donate(selectedFundIndex, { from: account, value: weiAmount });
         await tx.wait();
         selectedFund.totalAmount += amount;
