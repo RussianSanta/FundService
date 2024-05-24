@@ -10,7 +10,7 @@ if (window.ethereum==undefined) {
 const provider = new ethers.BrowserProvider(window.ethereum);
 const signer = await provider.getSigner();
 
-const contractAddress = "0x55eE0B72D5952A15220e6f425cB86AB347b942CF";
+const contractAddress = "0xf1d77F32ad7e6fAaD0c1FC06966f71CdE1157Aa7";
 const contractABI = [
 	{
 		"inputs": [
@@ -300,6 +300,19 @@ const contractABI = [
 	},
 	{
 		"inputs": [],
+		"name": "getFunds",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getUserFunds",
 		"outputs": [
 			{
@@ -380,16 +393,34 @@ async function createFund() {
     }
 }
 
-function updateFundSelect() {
-    const fundSelect = document.getElementById('fundSelect');
-    fundSelect.innerHTML = '<option value="" disabled selected>Выберите сбор</option>';
+async function updateFundSelect() {
+	try {
+		// Получение списка активных сборов
+		const fundIds = await contract.getFunds();
+		
+		funds.length = 0; // Очищаем текущий массив фондов
 
-    funds.forEach((fund, index) => {
-        const option = document.createElement('option');
-        option.value = `fund${index + 1}`;
-        option.textContent = fund.name;
-        fundSelect.appendChild(option);
-    });
+		// Получение информации о каждом активном сборе
+		for (let i = 0; i < fundIds.length; i++) {
+			const fundId = fundIds[i];
+			const fundInfo = await contract.funds(fundId); // Предполагается, что в контракте есть массив funds
+			const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount);
+			funds.push(fund);
+		}
+
+		// Обновление выпадающего списка
+		const fundSelect = document.getElementById('fundSelect');
+		fundSelect.innerHTML = '<option value="" disabled selected>Выберите сбор</option>';
+
+		funds.forEach((fund, index) => {
+			const option = document.createElement('option');
+			option.value = `fund${index + 1}`;
+			option.textContent = fund.name;
+			fundSelect.appendChild(option);
+		});
+	} catch (error) {
+		console.error('Ошибка при обновлении списка фондов:', error);
+	}
 }
 
 function showFundInfoButton() {
@@ -424,35 +455,55 @@ function updateFundInfo() {
     }
 }
 
-function updateMyFundsForm() {
-    const fundsList = document.getElementById('fundsList');
-    fundsList.innerHTML = ''; // Очищаем текущий список
+async function updateMyFundsForm() {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        
+        // Получение списка активных сборов пользователя
+        const userFundIds = await contract.getUserFunds({ from: account });
 
-    funds.forEach((fund, index) => {
-        const fundBlock = document.createElement('div');
-        fundBlock.className = 'fund-block';
+        funds.length = 0; // Очищаем текущий массив фондов
 
-        const fundInfo = `
-            <p><strong>Название сбора:</strong> ${fund.name}</p>
-            <p><strong>Описание сбора:</strong> ${fund.description}</p>
-            <p><strong>Минимальная сумма перевода:</strong> ${fund.minAmount}</p>
-            <p><strong>Текущая сумма:</strong> ${fund.totalAmount}</p>
-        `;
-        fundBlock.innerHTML = fundInfo;
+        // Получение информации о каждом активном сборе пользователя
+        for (let i = 0; i < userFundIds.length; i++) {
+            const fundId = userFundIds[i];
+            const fundInfo = await contract.funds(fundId); // Предполагается, что в контракте есть массив funds
+            const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount, fundInfo.totalAmount);
+            funds.push(fund);
+        }
 
-        const requestPaymentButton = document.createElement('button');
-        requestPaymentButton.textContent = 'Запросить выплату';
-        requestPaymentButton.onclick = () => requestPayment(index);
+        const fundsList = document.getElementById('fundsList');
+        fundsList.innerHTML = ''; // Очищаем текущий список
 
-        const closeFundButton = document.createElement('button');
-        closeFundButton.textContent = 'Закрыть сбор';
-        closeFundButton.onclick = () => closeFund(index);
+        funds.forEach((fund, index) => {
+            const fundBlock = document.createElement('div');
+            fundBlock.className = 'fund-block';
 
-        fundBlock.appendChild(requestPaymentButton);
-        fundBlock.appendChild(closeFundButton);
+            const fundInfo = `
+                <p><strong>Название сбора:</strong> ${fund.name}</p>
+                <p><strong>Описание сбора:</strong> ${fund.description}</p>
+                <p><strong>Минимальная сумма перевода:</strong> ${fund.minAmount}</p>
+                <p><strong>Текущая сумма:</strong> ${fund.totalAmount}</p>
+            `;
+            fundBlock.innerHTML = fundInfo;
 
-        fundsList.appendChild(fundBlock);
-    });
+            const requestPaymentButton = document.createElement('button');
+            requestPaymentButton.textContent = 'Запросить выплату';
+            requestPaymentButton.addEventListener('click', () => requestPayment(index));
+
+            const closeFundButton = document.createElement('button');
+            closeFundButton.textContent = 'Закрыть сбор';
+            closeFundButton.addEventListener('click', () => closeFund(index));
+
+            fundBlock.appendChild(requestPaymentButton);
+            fundBlock.appendChild(closeFundButton);
+
+            fundsList.appendChild(fundBlock);
+        });
+    } catch (error) {
+        console.error('Ошибка при обновлении списка пользовательских фондов:', error);
+    }
 }
 
 async function requestPayment(index) {
