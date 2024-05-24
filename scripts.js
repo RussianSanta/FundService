@@ -469,7 +469,7 @@ async function updateMyFundsForm() {
         for (let i = 0; i < userFundIds.length; i++) {
             const fundId = userFundIds[i];
             const fundInfo = await contract.funds(fundId); // Предполагается, что в контракте есть массив funds
-			var totalAmount = fundInfo.totalAmount.toString().substring(0, fundInfo.totalAmount.toString().length-1)
+			var totalAmount = fundInfo.totalAmount.toString().substring(0, fundInfo.totalAmount.toString().length)
 			console.log(totalAmount)
             const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount, totalAmount);
             funds.push(fund);
@@ -556,7 +556,7 @@ async function handlePayment() {
     const account = accounts[0];
 
     const userBalance = await provider.getBalance(account);
-	balance = userBalance.toString().substring(0, userBalance.toString().length-1)
+	balance = userBalance.toString().substring(0, userBalance.toString().length)
 	console.log(balance)
 
     if (selectedFundIndex < 0) {
