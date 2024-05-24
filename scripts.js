@@ -554,7 +554,8 @@ async function handlePayment() {
     const account = accounts[0];
 
     const userBalance = await provider.getBalance(account);
-	console.log(userBalance)
+	balance = userBalance.toString().substring(0, userBalance.toString().length-2)
+	console.log(balance)
 
     if (selectedFundIndex < 0) {
         alert('Пожалуйста, выберите сбор.');
