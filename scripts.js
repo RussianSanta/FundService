@@ -302,12 +302,18 @@ const contractABI = [
 	}
 ];
 
-// Инициализация Web3
-let web3;
+// Подключаем ethers.js
+const { ethers } = require("ethers");
+
+// Инициализация ethers.js
+let provider;
+let signer;
 let contract;
+
 if (window.ethereum) {
-    web3 = new Web3(window.ethereum);
-    contract = new web3.eth.Contract(contractABI, contractAddress);
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    contract = new ethers.Contract(contractAddress, contractABI, signer);
 } else {
     alert('Пожалуйста, установите MetaMask!');
 }
@@ -361,7 +367,8 @@ async function createFund() {
     const account = accounts[0];
 
     try {
-        await contract.methods.createFund(name, description, minAmount).send({ from: account });
+        const tx = await contract.createFund(name, description, minAmount, { from: account });
+        await tx.wait();
         const newFund = new Fund(name, description, minAmount);
         funds.push(newFund);
 
@@ -461,7 +468,8 @@ async function requestPayment(index) {
     const account = accounts[0];
 
     try {
-        await contract.methods.requestPayment(index).send({ from: account });
+        const tx = await contract.requestWithdrawal(index, { from: account });
+        await tx.wait();
         funds[index].totalAmount = 0;
         alert('Запрошен вывод денег');
         updateMyFundsForm();
@@ -477,7 +485,8 @@ async function closeFund(index) {
     const account = accounts[0];
 
     try {
-        await contract.methods.closeFund(index).send({ from: account });
+        const tx = await contract.closeFund(index, { from: account });
+        await tx.wait();
         funds.splice(index, 1); // Удаляем сбор из массива
         updateFundSelect(); // Обновляем выпадающий список в первой форме
         updateMyFundsForm(); // Обновляем третью форму
@@ -501,8 +510,8 @@ async function handlePayment() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
     const account = accounts[0];
 
-    const userBalance = await web3.eth.getBalance(account);
-    balance = web3.utils.fromWei(userBalance, 'ether');
+    const userBalance = await provider.getBalance(account);
+    balance = ethers.utils.formatEther(userBalance);
 
     if (selectedFundIndex < 0) {
         alert('Пожалуйста, выберите сбор.');
@@ -527,8 +536,9 @@ async function handlePayment() {
     }
 
     try {
-        const weiAmount = web3.utils.toWei(amount.toString(), 'ether');
-        await contract.methods.donateToFund(selectedFundIndex).send({ from: account, value: weiAmount });
+        const weiAmount = ethers.utils.parseEther(amount.toString());
+        const tx = await contract.donate(selectedFundIndex, { from: account, value: weiAmount });
+        await tx.wait();
         selectedFund.totalAmount += amount;
         alert('Пожертвование успешно выполнено!');
         updateMyFundsForm();
@@ -537,4 +547,3 @@ async function handlePayment() {
         alert('Ошибка при выполнении пожертвования.');
     }
 }
-
