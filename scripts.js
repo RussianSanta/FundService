@@ -330,11 +330,11 @@ var contract = new ethers.Contract(contractAddress, contractABI, signer);;
 
 // Класс для управления фондами
 class Fund {
-    constructor(name, description, minAmount) {
+    constructor(name, description, minAmount, totalAmount) {
         this.name = name;
         this.description = description;
         this.minAmount = parseFloat(minAmount);
-        this.totalAmount = 0; // Новое поле суммы
+        this.totalAmount = parseFloat(totalAmount);
     }
 }
 
