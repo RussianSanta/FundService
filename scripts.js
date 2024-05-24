@@ -1,6 +1,5 @@
-
 // Подключаем ethers.js
-import { ethers } from "ethers";
+import { ethers } from "./ethers/dist/ethers.min.js";
 
 if (window.ethereum==undefined) {
 	alert('Пожалуйста, установите MetaMask!');
@@ -328,6 +327,14 @@ class Fund {
 
 const funds = [];
 
+document.getElementById("ateFundFormButton").onclick = showForm('paymentForm')
+document.getElementById("myFundsFormButton").onclick = showForm('createFundForm')
+document.getElementById("paymentFormButton").onclick = showForm('myFundsForm')
+document.getElementById("fundInfoButton").onclick = toggleFundInfo()
+document.getElementById("handlePaymentButton").onclick = handlePayment()
+document.getElementById("createFundButton").onclick = createFund()
+document.getElementById("fundSelect").onchange = showFundInfoButton()
+
 function showForm(formId) {
     // Скрыть все формы
     document.querySelectorAll('.form-container').forEach(form => {
@@ -340,11 +347,6 @@ function showForm(formId) {
     if (formId === 'myFundsForm') {
         updateMyFundsForm();
     }
-}
-
-function changeButtonColor(button) {
-    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-    button.style.backgroundColor = randomColor;
 }
 
 async function createFund() {
