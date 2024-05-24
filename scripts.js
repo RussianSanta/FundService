@@ -580,8 +580,9 @@ async function handlePayment() {
     }
 
     try {
-        const weiAmount = amount.toString() + "wei";
-        const tx = await contract.donate(selectedFundIndex, { from: account, value: weiAmount });
+        const weiAmount = amount*1e18;
+		sum = "0x"+weiAmount.toString(16)
+        const tx = await contract.donate(selectedFundIndex, { from: account, value: sum });
         await tx.wait();
         selectedFund.totalAmount += amount;
         alert('Пожертвование успешно выполнено!');
