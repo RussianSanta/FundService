@@ -470,6 +470,8 @@ async function updateMyFundsForm() {
             const fundId = userFundIds[i];
             const fundInfo = await contract.funds(fundId); // Предполагается, что в контракте есть массив funds
             const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount, fundInfo.totalAmount);
+			console.log(fund)
+			console.log(fundInfo.totalAmount)
             funds.push(fund);
         }
 
