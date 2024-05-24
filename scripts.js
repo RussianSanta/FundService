@@ -581,7 +581,7 @@ async function handlePayment() {
 
     try {
         const weiAmount = amount*1e18;
-		sum = "0x"+weiAmount.toString(16)
+		var sum = "0x"+weiAmount.toString(16)
         const tx = await contract.donate(selectedFundIndex, { from: account, value: sum });
         await tx.wait();
         selectedFund.totalAmount += amount;
