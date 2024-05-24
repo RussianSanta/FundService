@@ -347,7 +347,11 @@ function showForm(formId) {
     });
     // Показать выбранную форму
     document.getElementById(formId).classList.remove('hidden');
-
+	
+	// Обновить первую форму при открытии
+	if (formId === 'paymentForm') {
+		updateFundSelect()
+	}
     // Обновить третью форму при открытии
     if (formId === 'myFundsForm') {
         updateMyFundsForm();
@@ -399,7 +403,6 @@ async function updateFundSelect() {
 		const fundIds = await contract.getFunds();
 		
 		funds.length = 0; // Очищаем текущий массив фондов
-
 		// Получение информации о каждом активном сборе
 		for (let i = 0; i < fundIds.length; i++) {
 			const fundId = fundIds[i];
