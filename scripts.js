@@ -378,7 +378,7 @@ async function createFund() {
     try {
         const tx = await contract.createFund(name, description, minAmount, { from: account });
         await tx.wait();
-        const newFund = new Fund(name, description, minAmount);
+        const newFund = new Fund(name, description, minAmount, 0);
         funds.push(newFund);
 
         updateFundSelect();
@@ -407,7 +407,7 @@ async function updateFundSelect() {
 		for (let i = 0; i < fundIds.length; i++) {
 			const fundId = fundIds[i];
 			const fundInfo = await contract.funds(fundId); // Предполагается, что в контракте есть массив funds
-			const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount);
+			const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount, 0);
 			funds.push(fund);
 		}
 
@@ -470,6 +470,7 @@ async function updateMyFundsForm() {
             const fundId = userFundIds[i];
             const fundInfo = await contract.funds(fundId); // Предполагается, что в контракте есть массив funds
 			var totalAmount = fundInfo.totalAmount.toString().substring(0, fundInfo.totalAmount.toString().length-2)
+			console.log(totalAmount)
             const fund = new Fund(fundInfo.name, fundInfo.description, fundInfo.minAmount, totalAmount);
             funds.push(fund);
         }
