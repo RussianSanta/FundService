@@ -541,8 +541,8 @@ async function handlePayment() {
 }
 
 document.getElementById("paymentFormButton").onclick = () => showForm('paymentForm')
-document.getElementById("myFundsFormButton").onclick = () => showForm('createFundForm')
-document.getElementById("paymentFormButton").onclick = () => showForm('myFundsForm')
+document.getElementById("createFundFormButton").onclick = () => showForm('createFundForm')
+document.getElementById("myFundsFormButton").onclick = () => showForm('myFundsForm')
 document.getElementById("fundInfoButton").onclick = toggleFundInfo
 document.getElementById("handlePaymentButton").onclick = handlePayment
 document.getElementById("createFundButton").onclick = createFund
